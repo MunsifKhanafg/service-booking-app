@@ -165,38 +165,7 @@ const Home = () => {
           </div>
         </div>
 
-        {/* FEATURED SERVICES SECTION */}
-        {featuredServices.length > 0 && !searchQuery && selectedCategory === 'All' && (
-          <div className="mb-16 animate-fadeIn">
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center gap-4">
-                <div className="bg-gradient-to-r from-yellow-400 to-orange-500 p-3 rounded-xl shadow-lg">
-                  <FiStar className="text-white text-2xl" />
-                </div>
-                <div>
-                  <h2 className="text-4xl font-black text-gray-900 dark:text-white">
-                    Featured Services
-                  </h2>
-                  <p className="text-gray-600 dark:text-gray-400 mt-1">
-                    Hand-picked top-rated services just for you
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {featuredServices.map((service, index) => (
-                <div 
-                  key={service.id}
-                  className="animate-fadeIn"
-                  style={{animationDelay: `${index * 0.1}s`}}
-                >
-                  <ServiceCard service={service} />
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+
 
         {/* CATEGORY FILTER */}
         <div className="mb-12 animate-fadeIn">
