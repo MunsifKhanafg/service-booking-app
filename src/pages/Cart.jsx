@@ -1,6 +1,6 @@
-import { useNavigate } from 'react-router-dom';
-import { FiTrash2, FiShoppingBag, FiCalendar, FiClock } from 'react-icons/fi';
-import { useCart } from '../context/CartContext';
+import { useNavigate } from "react-router-dom";
+import { FiTrash2, FiShoppingBag, FiCalendar, FiClock } from "react-icons/fi";
+import { useCart } from "../context/CartContext";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -8,18 +8,18 @@ const Cart = () => {
 
   const handleCheckout = () => {
     if (cartItems.length === 0) return;
-    
-    // Save booking to localStorage
-    const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
-    const newBookings = cartItems.map(item => ({
+
+    // Save bookings to localStorage
+    const bookings = JSON.parse(localStorage.getItem("bookings") || "[]");
+    const newBookings = cartItems.map((item) => ({
       ...item,
       bookedAt: new Date().toISOString(),
-      status: 'Confirmed'
+      status: "Confirmed",
     }));
-    localStorage.setItem('bookings', JSON.stringify([...bookings, ...newBookings]));
-    
+    localStorage.setItem("bookings", JSON.stringify([...bookings, ...newBookings]));
+
     clearCart();
-    navigate('/checkout-success');
+    navigate("/checkout-success");
   };
 
   if (cartItems.length === 0) {
@@ -34,7 +34,7 @@ const Cart = () => {
             Looks like you haven't added any services yet.
           </p>
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate("/")}
             className="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-8 rounded-lg transition"
           >
             Browse Services
@@ -60,8 +60,8 @@ const Cart = () => {
             >
               {/* Image */}
               <img
-                src={item.service.image}
-                alt={item.service.title}
+                src={item.image || item.service?.image}
+                alt={item.title || item.service?.title}
                 className="w-32 h-32 object-cover rounded-lg"
               />
 
@@ -69,7 +69,7 @@ const Cart = () => {
               <div className="flex-1">
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-                    {item.service.title}
+                    {item.title || item.service?.title}
                   </h3>
                   <button
                     onClick={() => removeFromCart(item.id)}
@@ -80,18 +80,20 @@ const Cart = () => {
                 </div>
 
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                  By {item.service.provider}
+                  By {item.provider || item.service?.provider}
                 </p>
 
                 <p className="text-xs text-gray-500 dark:text-gray-500 mb-3 line-clamp-2">
-                  {item.service.description}
+                  {item.description || item.service?.description}
                 </p>
 
                 {item.bookingDetails && (
                   <div className="flex gap-4 text-sm mb-2">
                     <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
                       <FiCalendar className="text-primary-600" />
-                      <span>{new Date(item.bookingDetails.date).toLocaleDateString()}</span>
+                      <span>
+                        {new Date(item.bookingDetails.date).toLocaleDateString()}
+                      </span>
                     </div>
                     <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
                       <FiClock className="text-primary-600" />
@@ -108,10 +110,10 @@ const Cart = () => {
 
                 <div className="flex justify-between items-center mt-3 pt-3 border-t dark:border-gray-700">
                   <span className="text-sm text-gray-600 dark:text-gray-400">
-                    Duration: {item.service.duration}
+                    Duration: {item.duration || item.service?.duration}
                   </span>
                   <span className="text-xl font-bold text-primary-600 dark:text-primary-400">
-                    ${item.service.price}
+                    ${item.price || item.service?.price}
                   </span>
                 </div>
               </div>
@@ -160,7 +162,7 @@ const Cart = () => {
             </button>
 
             <button
-              onClick={() => navigate('/')}
+              onClick={() => navigate("/")}
               className="w-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-white font-semibold py-3 rounded-lg transition"
             >
               Continue Shopping
