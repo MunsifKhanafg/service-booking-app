@@ -1,5 +1,6 @@
 // src/components/ServiceCard.jsx
-import { FiStar, FiClock, FiShoppingBag } from "react-icons/fi";
+import { FiStar, FiShoppingBag } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 
 const FALLBACK_IMAGE =
@@ -7,10 +8,22 @@ const FALLBACK_IMAGE =
 
 const ServiceCard = ({ service }) => {
   const { addToCart } = useCart();
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/service/${service.id}`);
+  };
+
+  const handleAddToCart = (e) => {
+    e.stopPropagation(); // Prevent card click when clicking add to cart
+    addToCart(service);
+  };
 
   return (
-    <div className="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden">
-
+    <div 
+      onClick={handleCardClick}
+      className="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden cursor-pointer"
+    >
       {/* IMAGE (FIXED) */}
       <div className="h-48 w-full bg-gray-100">
         <img
@@ -48,8 +61,8 @@ const ServiceCard = ({ service }) => {
 
         {/* BUTTON */}
         <button
-          onClick={() => addToCart(service)}
-          className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 flex items-center justify-center gap-2"
+          onClick={handleAddToCart}
+          className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 flex items-center justify-center gap-2 transition"
         >
           <FiShoppingBag />
           Add to Cart
